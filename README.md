@@ -1,12 +1,30 @@
 # reactive-spring-part-I
 Aplicacion reactiva usando spring webflux y proyecto reactor
 
-# Run
+## Correr la aplicacion
 
-Para correr la aplicacion se debe tener instalado JDK 8 o superior y maven.
+Para correr la aplicacion se debe tener instalado JDK 8 o superior (9,10 u 11) y maven.
 
-Ejecutar el maven 
+En la raiz del proyecto ejecutar en la consola:
 
-# Empaquetar
+``
+ mvn spring-boot:run
+``
+
+## Empaquetar
+
+Para empaquetar como ejecutable y crear un UberJar o FatJar ejecutar en consola:
+
+``
+mvn clean install
+``
+
+## Ejecutar empaquetado como Jar
+
+Ejecutar en consola:
+
+``
+
+``
 
 
