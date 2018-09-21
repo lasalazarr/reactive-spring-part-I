@@ -31,13 +31,13 @@ public class MockClienteRepository {
             String id = c.getId();
             clientesStore.put(id, c);
         }).thenEmpty(Mono.empty());
-        //clientesStore.put(cliente.getId(), cliente);
-        //return Mono.justOrEmpty(cliente);
     }
 
-    public Mono<Cliente> update(Cliente cliente){
-        clientesStore.put(cliente.getId(), cliente);
-        return Mono.justOrEmpty(cliente);
+    public Mono<Void> update(Mono<Cliente> cliente){
+        return cliente.doOnNext(c -> {
+            String id = c.getId();
+            clientesStore.put(id, c);
+        }).thenEmpty(Mono.empty());
     }
 
     public void delete(String id){
