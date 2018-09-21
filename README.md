@@ -19,12 +19,16 @@ Para empaquetar como ejecutable y crear un UberJar o FatJar ejecutar en consola:
 mvn clean install
 ``
 
-## Ejecutar empaquetado como Jar
+## Ejecutar como Jar
 
 Ejecutar en consola:
 
 ``
-
+mvn clean install
+``
+Luego ejecutar:
+``
+java -jar target/reactive-spring-part-I-0.0.1-SNAPSHOT.jar
 ``
 
 
