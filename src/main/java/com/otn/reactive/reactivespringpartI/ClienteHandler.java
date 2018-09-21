@@ -11,6 +11,9 @@ import reactor.core.publisher.Mono;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.web.reactive.function.BodyExtractors.toMono;
+
 @Component
 public class ClienteHandler {
 
@@ -19,8 +22,28 @@ public class ClienteHandler {
 
     public Mono<ServerResponse> getAll(ServerRequest request) {
         Flux<Cliente> clientes = Flux.fromIterable(mockClienteRepository.getAll());
-        return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(clientes, Cliente.class);
+        return ServerResponse.ok().contentType(APPLICATION_JSON).body(clientes, Cliente.class);
     }
 
+    public Mono<ServerResponse> save(ServerRequest request) {
+        Mono<Cliente> clienteMono = request.bodyToMono(Cliente.class);
+        return ServerResponse.ok().build(mockClienteRepository.save(clienteMono));
+    }
 
+    public Mono<ServerResponse> update(ServerRequest request) {
+        String clienteId = request.pathVariable("id");
+        Mono<Cliente> clienteMono = request.bodyToMono(Cliente.class);
+        return ServerResponse.ok().build();
+
+//        Mono<ServerResponse> notFound = ServerResponse.notFound().build();
+//        Mono<Cliente> personMono = this.mockClienteRepository.update(clienteMono.blockOptional().get());
+//        return personMono
+//                .then(person -> ServerResponse.ok().contentType(APPLICATION_JSON).body(fromObject(person)))
+//                .otherwiseIfEmpty(notFound);
+    }
+
+    public Mono<ServerResponse> delete(ServerRequest request) {
+        String clienteId = request.pathVariable("id");
+        return ServerResponse.ok().build();
+    }
 }

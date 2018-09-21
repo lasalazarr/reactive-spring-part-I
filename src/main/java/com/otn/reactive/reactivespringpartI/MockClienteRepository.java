@@ -1,6 +1,7 @@
 package com.otn.reactive.reactivespringpartI;
 
 import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Mono;
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;
@@ -25,14 +26,18 @@ public class MockClienteRepository {
         return clientesStore.values();
     }
 
-    public Cliente save( Cliente cliente){
-        clientesStore.put(cliente.getId(), cliente);
-        return cliente;
+    public Mono<Void> save(Mono<Cliente> cliente){
+        return cliente.doOnNext(c -> {
+            String id = c.getId();
+            clientesStore.put(id, c);
+        }).thenEmpty(Mono.empty());
+        //clientesStore.put(cliente.getId(), cliente);
+        //return Mono.justOrEmpty(cliente);
     }
 
-    public Cliente update(Cliente cliente){
+    public Mono<Cliente> update(Cliente cliente){
         clientesStore.put(cliente.getId(), cliente);
-        return cliente;
+        return Mono.justOrEmpty(cliente);
     }
 
     public void delete(String id){
